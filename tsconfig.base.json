@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "lib": ["es2017", "dom"],
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"] // parcel convention
+    }
+  }
+}

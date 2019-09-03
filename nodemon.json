@@ -1,0 +1,5 @@
+{
+  "watch": ["build"],
+  "ext": "js",
+  "exec": "electron ./build/main.js"
+}

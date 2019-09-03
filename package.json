@@ -1,0 +1,41 @@
+{
+  "name": "gitrail",
+  "version": "0.0.1",
+  "main": "build/main.js",
+  "author": "hackape <v@hackape.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/webpack": "^4.39.1",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
+    "dotenv": "^8.1.0",
+    "electron": "^6.0.7",
+    "electron-builder": "^21.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.19.1",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.0.4",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.6.2",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "scripts": {
+    "start": "node scripts/start.js",
+    "client": "webpack-dev-server --config ./webpack.config.client.js",
+    "electron": "webpack -w --config ./webpack.config.electron.js",
+    "build:client": "STAGE=build webpack --config ./webpack.config.client.js",
+    "build:electron": "STAGE=build webpack --config ./webpack.config.electron.js",
+    "pack": "electron-builder",
+    "build": "STAGE=build yarn run build:client && yarn run build:electron && yarn run pack"
+  }
+}
