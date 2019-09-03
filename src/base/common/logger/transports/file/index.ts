@@ -1,0 +1,1 @@
+export { fileTransportFactory } from './file'
