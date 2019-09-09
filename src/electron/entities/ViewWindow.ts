@@ -6,8 +6,8 @@ import uuid from 'uuid/v4'
 const viewWindowConfigs: { [viewType: string]: IViewWindowConfig } = {
   dashboard: {
     type: 'dashboard',
-    width: 900,
-    height: 540,
+    width: 480,
+    height: 800,
     singleton: true,
   },
   repo: {
