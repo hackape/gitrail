@@ -2,65 +2,38 @@ import React from 'react';
 import { List, Button, Upload } from 'antd';
 import  fs from 'fs';
 import { connect, Dispatch } from 'react-redux'
+import commandRegistry from '../emitter'
+import * as types from '../types'
 
-interface IProps {
-    dispatch: any;
-}
-
-interface IHomeState{
-    name: any[],
-    path: any[],
-}
-class Home extends React.Component<IProps, IHomeState> {
+class Home extends React.PureComponent<any, any> {
     constructor(props: any){
         super(props);
-        this.state = {
-            name:[],
-            path: []
-        }
     }
     componentDidMount() {
-        // fs.readFile('2.txt',function(error,data){
-        //     if(error) {
-        //         fs.mkdir('2.txt',function(error){
-        //             if(error){
-        //                 console.log(error);
-        //                 return false;
-        //             }
-        //             console.log('创建目录成功');
-        //         })
-        //     };
-        //     const res = JSON.parse(data.toString())
-        //     console.log(res)
-        // })
         this.getLocalData();
     }
     getLocalData = () => {
-        this.props.dispatch({ type:'LOAD_FILE' })
+        commandRegistry.emit(types.LOAD_FILE); 
     }
     addProject = (data) => {
-        const {  path } = this.state
-        const name = [];
+        const { paths, names } = this.props;
         const currentPath = data.file.originFileObj.path;
         const currentName = data.file.name
-        name.push(currentName);
-        path.push(currentPath);
-        this.setState({name, path})
+        names.push(currentName);
+        paths.push(currentPath);
         const str = {}
-        name.map((item, index)=>{
-            str[item] = path[index]
+        names.map((item, index)=>{
+            str[item] = paths[index]
         })
-        fs.writeFile("2.txt", JSON.stringify(str) , function(err){
-            if(err) {
-              return console.log("写入文件失败", err);
-            }
-            console.log("写入文件成功");
-          })
+        commandRegistry.emit(types.ADD_FILE, str);
+    }
+    handleClick=(item) => {
+        console.log(this.props.loacalData[item.target.innerHTML])
     }
     renderHeader = () => {
         return <div>
             {/* <input type="file"/> */}
-            <Upload onChange={this.addProject}>
+            <Upload onChange={this.addProject} showUploadList={false}>
                 <Button>添加项目</Button>
             </Upload>
         </div>
@@ -71,9 +44,9 @@ class Home extends React.Component<IProps, IHomeState> {
                 <List
                     header={this.renderHeader()}
                     bordered
-                    dataSource={this.state.name ? this.state.name : []}
-                    renderItem={item => (
-                        <List.Item>
+                    dataSource={this.props.names ? this.props.names : []}
+                    renderItem={(item, index) => (
+                        <List.Item onClick={this.handleClick}>
                             {item}
                         </List.Item>
                     )}
@@ -83,10 +56,14 @@ class Home extends React.Component<IProps, IHomeState> {
     }
 }
 
-const mapStateToProps = (state: any, ownProps:any) => ({ localdata: {} })
+const mapStateToProps = (state: any, ownProps:any) => ({
+    loacalData: state.loacalData,
+    names: Object.keys(state.loacalData),
+    paths: Object.values(state.loacalData),
+})
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        dispatch,
+        dispatch
     }
 }
 const mergeProps = (stateProps:any, dispatchProps:any, ownProps:any) => {

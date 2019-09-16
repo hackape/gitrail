@@ -16,20 +16,16 @@ const initialState:INotebookPluginStore = {
 }
 
 export default function (state: INotebookPluginStore = initialState, action: AnyAction) {
-    let path = ''
+    let loacalData = {};
     switch (action.type) {
     case 'UPDPATE_CURRENT':
     case types.LOAD_FILE:
-        // path = action.payload.path
-        // const { current } = action.payload
-        // return produce(state, (draftState) => {
-        //     draftState.notebooks[path] = { ...draftState.notebooks[path], ...current }
-        // })
-        console.log('hhhhhh');
-        return { ...state }
-    case 'NEW_FILE_DIALOG':
+        loacalData = action.payload.loacalData;
+        return { ...state, loacalData }
+    case types.ADD_FILE:
+        loacalData = action.payload.loacalData;
         return {
-            ...state, showNewFileDialog:action.payload,
+            ...state, loacalData,
         }
     default:
         return state
