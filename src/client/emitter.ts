@@ -3,6 +3,7 @@ import store from './store';
 import  fs from 'fs';
 import { loadFile, addFile } from './action';
 import * as types from './types'
+import { exec } from 'child_process';
 
 const commandRegistry = new events.EventEmitter();
 
@@ -33,4 +34,14 @@ commandRegistry.on(types.ADD_FILE, (str)=> {
         store.dispatch(addFile({loacalData: str}));
     })
 
+commandRegistry.on(types.OPEN_FILE, (str)=> {
+    const execStr = `cd ${str} && git branch`
+        exec(execStr, {maxBuffer: 2000 * 1024}, function (error, stdout, stderr){
+            if(error){
+                console.log(error)
+            }else{
+                console.log(stdout);
+            }
+        })
+    })
 export default commandRegistry;

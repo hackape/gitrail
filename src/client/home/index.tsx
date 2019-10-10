@@ -29,11 +29,12 @@ class Home extends React.PureComponent<any, any> {
     }
     handleClick=(item) => {
         console.log(this.props.loacalData[item.target.innerHTML])
+        commandRegistry.emit(types.OPEN_FILE, this.props.loacalData[item.target.innerHTML]);
     }
     renderHeader = () => {
         return <div>
             {/* <input type="file"/> */}
-            <Upload onChange={this.addProject} showUploadList={false}>
+            <Upload onChange={this.addProject} showUploadList={false} directory>
                 <Button>添加项目</Button>
             </Upload>
         </div>
