@@ -4,6 +4,8 @@ import  fs from 'fs';
 import { connect, Dispatch } from 'react-redux'
 import commandRegistry from '../emitter'
 import * as types from '../types'
+// import ProjectDetailManager from '../project/projectdetailViewM'
+// import { app } from 'electron'
 
 class Home extends React.PureComponent<any, any> {
     constructor(props: any){
@@ -27,8 +29,8 @@ class Home extends React.PureComponent<any, any> {
         })
         commandRegistry.emit(types.ADD_FILE, str);
     }
-    handleClick=(item) => {
-        console.log(this.props.loacalData[item.target.innerHTML])
+    handleClick= (item) => {
+        const BrowserWindowProxy = window.open('/Projectdetail');
         commandRegistry.emit(types.OPEN_FILE, this.props.loacalData[item.target.innerHTML]);
     }
     renderHeader = () => {
