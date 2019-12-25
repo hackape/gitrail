@@ -30,7 +30,7 @@ class Home extends React.PureComponent<any, any> {
         commandRegistry.emit(types.ADD_FILE, str);
     }
     handleClick= (item) => {
-        const BrowserWindowProxy = window.open('/Projectdetail');
+        const BrowserWindowProxy = window.open('/projectdetail');
         commandRegistry.emit(types.OPEN_FILE, this.props.loacalData[item.target.innerHTML]);
     }
     renderHeader = () => {
